@@ -1,5 +1,5 @@
 package org.example;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Objects;
 
 public class Route {
@@ -7,7 +7,7 @@ public class Route {
     private double distance;
     private int popularity;
     private boolean isFavorite;
-    private List<String> locationPoints;
+    private LinkedList<String> locationPoints;
 
     public void increasePopularity() {
         this.popularity++;
@@ -18,7 +18,7 @@ public class Route {
             return false;
         }
 
-        return locationPoints.get(0).equals(startPoint) && locationPoints.get(locationPoints.size() - 1).equals(endPoint);
+        return locationPoints.getFirst().equals(startPoint) && locationPoints.getLast().equals(endPoint);
     }
 
     public int getFavoritePriority() {
@@ -27,13 +27,13 @@ public class Route {
 
     public String getFirstLocationPoint() {
         if (!locationPoints.isEmpty()) {
-            return locationPoints.get(0);
+            return locationPoints.getFirst();
         }
         return null;
     }
 
-    //Конструктор
-    public Route(String id, double distance, int popularity, boolean isFavorite, List<String> locationPoints) {
+    // Конструктор
+    public Route(String id, double distance, int popularity, boolean isFavorite, LinkedList<String> locationPoints) {
         this.id = id;
         this.distance = distance;
         this.popularity = popularity;
@@ -58,7 +58,7 @@ public class Route {
         return Objects.hash(id, distance, popularity, isFavorite, locationPoints);
     }
 
-    //Геттеры и сеттеры
+    // Геттеры и сеттеры
     public String getId() {
         return id;
     }
@@ -91,11 +91,12 @@ public class Route {
         isFavorite = favorite;
     }
 
-    public List<String> getLocationPoints() {
+    public LinkedList<String> getLocationPoints() {
         return locationPoints;
     }
 
-    public void setLocationPoints(List<String> locationPoints) {
+    public void setLocationPoints(LinkedList<String> locationPoints) {
         this.locationPoints = locationPoints;
     }
 }
+
