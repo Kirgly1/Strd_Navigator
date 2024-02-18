@@ -14,7 +14,7 @@ public class Main {
         navigator.addRoute(new Route("1", 700.0, 1, true, new LinkedList<>(Arrays.asList("Москва", "Тверь", "Великий Новгород", "Санкт-Петербург"))));
         navigator.addRoute(new Route("2", 1664.0, 2, true, new LinkedList<>(Arrays.asList("Москва", "Тула",
                 "Воронеж", "Ростов-на-Дону", "Славянск-на-Кубани", "Керчь", "Феодосия"))));
-        navigator.addRoute(new Route("3", 424.0, 1, true, new LinkedList<>(Arrays.asList("Москва", "Петушки", "Владимир", "Дзержинск", "Нижний Новгород"))));
+        navigator.addRoute(new Route("3", 424.0, 3, true, new LinkedList<>(Arrays.asList("Москва", "Петушки", "Владимир", "Дзержинск", "Нижний Новгород"))));
 
 
 
@@ -39,16 +39,23 @@ public class Main {
                     double distance = scanner.nextDouble();
                     System.out.print("Популярность: ");
                     int popularity = scanner.nextInt();
-                    // Очистка буфера
+
                     scanner.nextLine();
-                    System.out.print("Вам нравится этот маршрут? Введите true или false ");
+                    System.out.print("Вам нравится этот маршрут? Введите true или false \n");
                     boolean isFavorite = scanner.nextBoolean();
-                    // Очистка буфера
+
                     scanner.nextLine();
-                    System.out.print("Введите города и остановочные пункты ");
+                    System.out.print("Введите города и остановочные пункты, разделенные запятыми: ");
                     String[] pointsArray = scanner.nextLine().split(",");
-                    navigator.addRoute(new Route(id, distance, popularity, isFavorite, new LinkedList<>(Arrays.asList(pointsArray))));
-                    System.out.println("Маршрут успешно добавлен!");
+
+                    Route newRoute = new Route(id, distance, popularity, isFavorite, new LinkedList<>(Arrays.asList(pointsArray)));
+
+                    if (!navigator.contains(newRoute)) {
+                        navigator.addRoute(newRoute);
+                        System.out.println("Маршрут успешно добавлен!");
+                    } else {
+                        System.out.println("Ошибка, такой маршрут уже существует");
+                    }
                     break;
 
                 case 2:
@@ -70,11 +77,11 @@ public class Main {
                 case 4:
                     System.out.println("Введите начальную точку ");
                     String startPoint = scanner.next();
-                    scanner.nextLine(); // Добавим эту строку для считывания символа новой строки
+                    scanner.nextLine();
                     System.out.println("Введите конечную точку ");
                     String endPoint = scanner.nextLine();
 
-                    System.out.println("Соответствующие маршруты:");
+                    System.out.println("Соответствующие маршруты: ");
                     for (Route route : navigator.searchRoutes(startPoint, endPoint)) {
                         System.out.println(route.getId() + " - Расстояние: " + route.getDistance() +
                                 ", Популярность: " + route.getPopularity() +

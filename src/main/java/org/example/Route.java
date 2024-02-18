@@ -32,7 +32,6 @@ public class Route {
         return null;
     }
 
-    // Конструктор
     public Route(String id, double distance, int popularity, boolean isFavorite, LinkedList<String> locationPoints) {
         this.id = id;
         this.distance = distance;
@@ -46,11 +45,15 @@ public class Route {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Route route = (Route) o;
-        return Double.compare(route.distance, distance) == 0 &&
+
+        if (Double.compare(route.distance, distance) == 0 &&
                 popularity == route.popularity &&
                 isFavorite == route.isFavorite &&
-                Objects.equals(id, route.id) &&
-                Objects.equals(locationPoints, route.locationPoints);
+                Objects.equals(locationPoints, route.locationPoints)) {
+            throw new IllegalArgumentException("Ошибка, маршрут уже существует " + route);
+        }
+
+        return Objects.equals(id, route.id);
     }
 
     @Override
@@ -58,7 +61,6 @@ public class Route {
         return Objects.hash(id, distance, popularity, isFavorite, locationPoints);
     }
 
-    // Геттеры и сеттеры
     public String getId() {
         return id;
     }
@@ -98,5 +100,6 @@ public class Route {
     public void setLocationPoints(LinkedList<String> locationPoints) {
         this.locationPoints = locationPoints;
     }
+
 }
 

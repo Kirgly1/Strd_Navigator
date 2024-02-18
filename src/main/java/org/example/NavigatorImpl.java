@@ -78,7 +78,6 @@ public class NavigatorImpl implements Navigator {
         return result;
     }
 
-    // Вспомогательный метод для получения расстояния между точками
     private int getDistanceBetweenPoints(Route route, String startPoint, String endPoint) {
         List<String> locationPoints = route.getLocationPoints();
 
@@ -97,7 +96,6 @@ public class NavigatorImpl implements Navigator {
         if (startIndex != -1 && endIndex != -1) {
             return Math.abs(endIndex - startIndex);
         } else {
-            // Возвращаем максимальное значение, если точки не найдены в маршруте
             return Integer.MAX_VALUE;
         }
     }
@@ -139,10 +137,10 @@ public class NavigatorImpl implements Navigator {
                 .reversed()
                 .thenComparingDouble(Route::getDistance)
                 .thenComparingInt(route -> route.getLocationPoints().size())
-                .thenComparingLong(route -> routes.indexOf(route))
+                .thenComparing(Route::getId)
         );
 
-        return result.subList(0, Math.min(result.size(), 3));
+        return result.subList(0, Math.min(result.size(), 5));
     }
 
 }
